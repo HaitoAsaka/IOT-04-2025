@@ -1,0 +1,363 @@
+/* thanh slidebar */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  overflow:hidden;
+}
+
+.sidebar {
+  width: 350px;
+  height: 100vh;
+  background-color: #2c3e50;
+  padding-top: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 90%;
+}
+
+.menu-item:hover {
+  background: #b0b7be;
+  width: 90%;
+}
+.icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.icon img {
+  width: 100%;
+  height: auto;
+}
+
+.menu-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 23px;
+  flex: 1;
+}
+
+.menu-item a:hover {
+  text-decoration: none;
+}
+
+.content {
+  margin-left: 350px;
+  height: 100vh;
+  padding-top: 20px;
+  flex: 1;
+  overflow:hidden;
+}
+
+
+
+
+/* Định dạng tổng quát cho cả 3 thẻ */
+.sections {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left; /* Căn giữa theo chiều ngang */
+  gap: 43px; /* Khoảng cách giữa các item */
+  position: relative;
+  width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+  padding-left: 20px;
+}
+
+
+/* Khung chứa từng cảm biến (nhiệt độ, độ ẩm, ánh sáng) */
+.sensor-box {
+  position: relative;
+  width: 550px;
+  background: #f5f5f5; /* Màu xám nhạt */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Phần nền màu cam */
+.sensor-box .sensor-bg {
+  width: 100%;
+  height: 50px;
+  background: #5b7fa3; /* Màu cam */
+  border-radius: 10px;
+  position: relative;
+}
+
+/* Tiêu đề chung */
+.sensor-title {
+  margin-top: 10px;
+  font-size: 50px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Giá trị cảm biến & đơn vị (℃, %, Lux) ngang hàng */
+.sensor-value {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.sensor-number {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #333;
+}
+
+.sensor-unit {
+  font-size: 40px;
+  font-weight: bold;
+  color: #000000;
+  margin-left: 5px;
+}
+
+/* Vòng tròn cam chứa icon */
+.sensor-icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* Vòng tròn xám */
+.sensor-circle {
+  width: 60px;
+  height: 60px;
+  background: #94b4d4; /* Màu xám nhạt  #2c3e50 */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+/* Icon của từng cảm biến */
+.sensor-icon img {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Chỉ báo mức độ (Cao, Vừa, Thấp) */
+.sensor-status {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* Màu sắc mức độ */
+.status-high {
+  color: red;
+}
+
+.status-medium {
+  color: green;
+}
+
+.status-low {
+  color: blue;
+}
+
+/* Ảnh dưới cùng */
+.sensor-bg-img {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  opacity: 20%;
+}
+
+
+
+
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 30px;
+  
+}
+.chart-section {
+  width: 75%;
+  margin-left: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bi-u-gi-tr-th-c {
+  font-size: 42px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  max-width: 800px; /* Giới hạn kích thước tối đa */
+  height: 568px; /* Điều chỉnh chiều cao */
+  margin: 0 auto; /* Canh giữa */
+  position: relative;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-legend {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+
+
+
+
+/* Bố cục tổng thể */
+.device-control {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 25%;
+  align-items: center;
+}
+
+.device {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%; /* Điều chỉnh độ rộng phù hợp */
+  text-align: center;
+}
+
+/* Icon + Tên thiết bị ở giữa */
+.device-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.device-icon img {
+  width: 60px;
+  height: 60px;
+}
+
+.device-name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Khung chứa nút bật/tắt */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  background: #e0e0e0;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Nút chung */
+.button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Nút Bật */
+.button2 {
+  background: #ddd;
+  color: black;
+}
+
+.button2.active {
+  background: #4CAF50; /* Xanh khi bật */
+  color: white;
+}
+
+/* Nút Tắt */
+.button4 {
+  background: #ddd;
+  color: black;
+}
+
+.button4.active {
+  background: #F44336; /* Đỏ khi tắt */
+  color: white;
+}
+
+
+
+
+
+/* Phần header chứa logo và tiêu đề */
+.header {
+  background-color: #f5f5f5; /* Màu nền */
+  padding: 15px;
+  border-bottom: 2px solid #ddd; /* Đường viền dưới */
+  margin-bottom: 30px;;
+}
+
+/* Chứa logo và tiêu đề */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Khoảng cách giữa logo và tiêu đề */
+}
+
+/* Khung logo */
+.logo img {
+  width: 50px; /* Kích thước logo */
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%; /* Bo tròn logo nếu cần */
+}
+
+/* Tiêu đề trang */
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+}

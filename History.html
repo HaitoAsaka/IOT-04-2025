@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./History.css" />
+    <title>Lịch sử thiết bị</title>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="header">
+        <div class="logo-container">
+          <div class="logo">
+            <img src="./img/ptit.png" alt="Logo" />
+          </div>
+          <div class="title">Quản lý dữ liệu cảm biến</div>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <img class="icon" src="./img/dashboard.png" alt="Dashboard" />
+        <a href="Dashboard.html">Dashboard</a>
+      </div>
+      <div class="menu-item">
+        <img class="icon" src="./img/data.png" alt="Dữ liệu cảm biến" />
+        <a href="Data.html">Dữ liệu cảm biến</a>
+      </div>
+      <div class="menu-item">
+        <img class="icon" src="./img/history.png" alt="Lịch sử bật tắt" />
+        <a href="#">Lịch sử bật tắt</a>
+      </div>
+      <div class="menu-item">
+        <img class="icon" src="./img/profile.jpg" alt="Profile" />
+        <a href="Profile.html">Profile</a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <div class="search-bar">
+          <img class="search-icon" src="./img/kinh.png" alt="Search Icon" />
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Tìm kiếm theo thời gian..."
+          />
+          <div class="divider"></div>
+        </div>
+      </div>
+
+      <!-- Sensor Data Table -->
+      <div class="sensor-data">
+        <h2 class="sensor-title">Lịch sử bật tắt</h2>
+        <div class="data-block">
+          <div class="table-header">
+            <h3 class="table-title">Dữ liệu các thiết bị</h3>
+          </div>
+
+          <!-- Data Table -->
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tên Thiết Bị</th>
+                <th>Trạng Thái</th>
+                <th>Ngày Tháng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Quạt trần</td>
+                <td><span class="status on">Bật</span></td>
+                <td>2025-03-10 14:30</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Đèn ngủ</td>
+                <td><span class="status off">Tắt</span></td>
+                <td>2025-11-10 22:15</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Điều hòa</td>
+                <td><span class="status on">Bật</span></td>
+                <td>2025-12-20 08:45</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Quạt trần</td>
+                <td><span class="status off">Tắt</span></td>
+                <td>2025-07-25 17:00</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Đèn ngủ</td>
+                <td><span class="status on">Bật</span></td>
+                <td>2025-08-15 06:20</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Máy lọc không khí</td>
+                <td><span class="status off">Tắt</span></td>
+                <td>2025-09-01 10:10</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Máy sưởi</td>
+                <td><span class="status on">Bật</span></td>
+                <td>2025-12-01 09:45</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Quạt cây</td>
+                <td><span class="status off">Tắt</span></td>
+                <td>2025-10-20 12:00</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Đèn chùm</td>
+                <td><span class="status on">Bật</span></td>
+                <td>2025-11-25 20:30</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Máy lạnh</td>
+                <td><span class="status off">Tắt</span></td>
+                <td>2025-06-18 15:50</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Pagination -->
+          <div class="pagination-container">
+            <span class="count">Số lượng: 10/10</span>
+            <!-- Hiển thị số lượng phần tử -->
+            <div class="pagination">
+              <a href="#">&laquo;</a>
+              <a href="#" class="active">1</a>
+              <a href="#">2</a>
+              <a href="#">3</a>
+              <a href="#">...</a>
+              <a href="#">&raquo;</a>
+            </div>
+            <div class="rows-per-page">
+              <label for="rowsPerPage">Số dòng hiển thị:</label>
+              <select id="rowsPerPage">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function searchByDate() {
+        // Lấy giá trị từ input tìm kiếm
+        let searchValue = document
+          .getElementById("searchInput")
+          .value.toLowerCase()
+          .trim();
+
+        // Lấy tất cả các hàng trong bảng
+        let table = document.querySelector(".data-table");
+        let rows = table.getElementsByTagName("tr");
+
+        // Duyệt qua từng hàng trong bảng (bỏ qua hàng tiêu đề)
+        for (let i = 1; i < rows.length; i++) {
+          let dateCell = rows[i].getElementsByTagName("td")[3]; // Cột ngày tháng
+          if (dateCell) {
+            let dateValue = dateCell.textContent || dateCell.innerText;
+            dateValue = dateValue.toLowerCase();
+
+            // Kiểm tra nếu ngày tháng chứa giá trị tìm kiếm
+            if (dateValue.includes(searchValue)) {
+              rows[i].style.display = "";
+            } else {
+              rows[i].style.display = "none";
+            }
+          }
+        }
+      }
+
+      // Thêm event listener cho input khi người dùng gõ
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+          searchInput.addEventListener("keyup", searchByDate);
+        }
+      });
+
+      function updateTableRows() {
+        const selectedValue = parseInt(
+          document.getElementById("rowsPerPage").value
+        );
+        const table = document.querySelector(".data-table");
+        const rows = table
+          .getElementsByTagName("tbody")[0]
+          .getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+          if (i < selectedValue) {
+            rows[i].style.display = "";
+          } else {
+            rows[i].style.display = "none";
+          }
+        }
+      }
+
+      // Gọi hàm khi trang tải xong
+      document.addEventListener("DOMContentLoaded", function () {
+        updateTableRows();
+
+        // Thêm sự kiện khi chọn số lượng dòng hiển thị
+        document
+          .getElementById("rowsPerPage")
+          .addEventListener("change", updateTableRows);
+      });
+    </script>
+  </body>
+</html>

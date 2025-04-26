@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./Dashboard.css" />
+    <title>Document</title>
+  </head>
+
+
+
+  <body>
+    <div class="sidebar">
+      <div class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <img src="./img/ptit.png" alt="Logo">
+            </div>
+            <div class="title">Quản lý dữ liệu cảm biến</div>
+        </div>
+    </div>
+    
+      <div class="menu-item">
+          <img class="icon" src="./img/dashboard.png" alt="Dashboard">
+          <a href="#">Dashboard</a>
+      </div>
+      <div class="menu-item">
+          <img class="icon" src="./img/data.png" alt="Dữ liệu cảm biến">
+          <a href="Data.html">Dữ liệu cảm biến</a>
+      </div>
+      <div class="menu-item">
+          <img class="icon" src="./img/history.png" alt="Lịch sử bật tắt">
+          <a href="History.html">Lịch sử bật tắt</a>
+      </div>
+      <div class="menu-item">
+          <img class="icon" src="./img/profile.jpg" alt="Profile">
+          <a href="Profile.html">Profile</a>
+      </div>
+  </div>
+  <div class="content">
+    <div class="sections">
+      <section class="sensor-box">
+        <div class="sensor-bg"></div>
+        <h2 class="sensor-title">Nhiệt độ</h2>
+      
+        <div class="sensor-value">
+          <p class="sensor-number">30</p>
+          <span class="sensor-unit">℃</span>
+        </div>
+      
+        <div class="sensor-icon">
+          <div class="sensor-circle"></div>
+          <img src="./img/heat.png" alt="Nhiệt độ">
+        </div>
+      
+        <p class="sensor-status status-high">Cao</p>
+        <img class="sensor-bg-img" src="./img/Frame 34.png">
+      </section>
+      
+      <section class="sensor-box">
+        <div class="sensor-bg"></div>
+        <h2 class="sensor-title">Độ ẩm</h2>
+      
+        <div class="sensor-value">
+          <p class="sensor-number">63</p>
+          <span class="sensor-unit">%</span>
+        </div>
+      
+        <div class="sensor-icon">
+          <div class="sensor-circle"></div>
+          <img src="./img/Humidity.png" alt="Độ ẩm">
+        </div>
+      
+        <p class="sensor-status status-medium">Vừa</p>
+        <img class="sensor-bg-img" src="./img/Group 30.png">
+      </section>
+      
+      <section class="sensor-box">
+        <div class="sensor-bg"></div>
+        <h2 class="sensor-title">Ánh sáng</h2>
+      
+        <div class="sensor-value">
+          <p class="sensor-number">600</p>
+          <span class="sensor-unit">Lux</span>
+        </div>
+      
+        <div class="sensor-icon">
+          <div class="sensor-circle"></div>
+          <img src="./img/Light.png" alt="Ánh sáng">
+        </div>
+      
+        <p class="sensor-status status-high">Cao</p>
+        <img class="sensor-bg-img" src="./img/Group 11.png">
+      </section>
+  </div>
+
+  <div class="container">
+    <section class="chart-section">
+        <div class="bi-u-gi-tr-th-c">
+            Biểu đồ giá trị thực
+            <br />
+        </div>
+
+        <div class="chart-container">
+            <canvas id="combinedChart"></canvas>
+        </div>
+    </section>
+
+    <section class="device-control">
+      <!-- Điều hòa -->
+      <div class="device">
+          <div class="device-info">
+              <div class="device-icon">
+                  <img src="./img/dh.png" alt="Điều hòa">
+              </div>
+              <h3 class="device-name">Điều hòa</h3>
+          </div>
+          <div class="button-container">
+              <button class="button button2" onclick="toggleButton(this)">Bật</button>
+              <button class="button button4" onclick="toggleButton(this)">Tắt</button>
+          </div>
+      </div>
+  
+      <!-- Đèn ngủ -->
+      <div class="device">
+          <div class="device-info">
+              <div class="device-icon">
+                  <img src="./img/dn.png" alt="Đèn ngủ">
+              </div>
+              <h3 class="device-name">Đèn ngủ</h3>
+          </div>
+          <div class="button-container">
+              <button class="button button2" onclick="toggleButton(this)">Bật</button>
+              <button class="button button4" onclick="toggleButton(this)">Tắt</button>
+          </div>
+      </div>
+  
+      <!-- Quạt trần -->
+      <div class="device">
+          <div class="device-info">
+              <div class="device-icon">
+                  <img src="./img/qt.png" alt="Quạt trần">
+              </div>
+              <h3 class="device-name">Quạt trần</h3>
+          </div>
+          <div class="button-container">
+              <button class="button button2" onclick="toggleButton(this)">Bật</button>
+              <button class="button button4" onclick="toggleButton(this)">Tắt</button>
+          </div>
+      </div>
+  </section>
+  
+  
+  
+  
+</div>
+
+ 
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function toggleButton(button) {
+  let container = button.parentElement; // Lấy container của các nút trong cùng một thiết bị
+  let buttons = container.getElementsByTagName("button");
+
+  // Xóa class 'active' và đặt lại màu cho tất cả các nút trong cùng nhóm
+  for (let btn of buttons) {
+    btn.classList.remove("active");
+    btn.style.backgroundColor = ""; // Đặt lại màu nền về mặc định (theo CSS)
+  }
+
+  // Kích hoạt nút được bấm
+  button.classList.add("active");
+
+  // Thay đổi màu sắc dựa trên trạng thái nút
+  if (button.textContent.trim() === "Bật") {
+    button.style.backgroundColor = "#4CAF50"; // Xanh khi bật
+  } else {
+    button.style.backgroundColor = "#F44336"; // Đỏ khi tắt
+  }
+}
+      document.addEventListener("DOMContentLoaded", function () {
+          // ========================== BIỂU ĐỒ CHART.JS ==========================
+          const ctx = document.getElementById('combinedChart').getContext('2d');
+  
+          const combinedChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: ['11h15', '11h20', '11h25', '11h30', '11h35'], // Thời gian
+                  datasets: [
+                      {
+                          label: 'Nhiệt độ (℃)',
+                          data: [30, 32, 31, 29, 30],
+                          backgroundColor: 'rgba(255, 0, 0, 0.6)', // Màu đỏ
+                          borderColor: 'red',
+                          borderWidth: 1,
+                          yAxisID: 'y-axis-1',
+                          type: 'bar',
+                      },
+                      {
+                          label: 'Độ ẩm (%)',
+                          data: [63, 65, 62, 64, 63],
+                          borderColor: 'blue',
+                          backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                          borderWidth: 2,
+                          fill: false,
+                          yAxisID: 'y-axis-1',
+                          type: 'line',
+                      },
+                      {
+                          label: 'Ánh sáng (Lux)',
+                          data: [600, 620, 610, 590, 600],
+                          backgroundColor: 'rgba(255, 255, 0, 0.6)', // Màu vàng
+                          borderColor: 'yellow',
+                          borderWidth: 1,
+                          yAxisID: 'y-axis-1',
+                          type: 'bar',
+                      },
+                  ],
+              },
+              options: {
+                  responsive: true,
+                  scales: {
+                      yAxes: [
+                          {
+                              id: 'y-axis-1',
+                              type: 'linear',
+                              position: 'left',
+                              ticks: {
+                                  beginAtZero: true,
+                                  callback: function (value) {
+                                      return value + "%"; // Hiển thị đơn vị %
+                                  },
+                              },
+                          },
+                      ],
+                  },
+                  plugins: {
+                      tooltip: { enabled: true },
+                      legend: { display: true, position: 'top' },
+                  },
+              },
+              plugins: [
+                  {
+                      afterDatasetsDraw: function (chart) {
+                          const ctx = chart.ctx;
+                          chart.data.datasets.forEach((dataset, i) => {
+                              const meta = chart.getDatasetMeta(i);
+                              if (!meta.hidden) {
+                                  meta.data.forEach((element, index) => {
+                                      const data = dataset.data[index];
+                                      ctx.fillStyle = '#000'; // Màu chữ
+                                      ctx.font = 'bold 12px Arial';
+                                      ctx.textAlign = 'center';
+                                      ctx.fillText(data, element.x, element.y - 10); // Hiển thị số trên cột
+                                  });
+                              }
+                          });
+                      },
+                  },
+              ],
+          });
+      });
+  </script>
+</html>
