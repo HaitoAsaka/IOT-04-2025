@@ -319,3 +319,16 @@ body {
   padding: 5px;
   font-size: 14px;
 }
+
+
+
+
+/* CSS cho trang hiện tại */
+.current {
+  background-color: #2196F3; /* Màu xanh lam */
+  color: white; /* Màu chữ trắng */
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
