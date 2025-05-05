@@ -66,11 +66,25 @@ exports.searchByTime = (req, res) => {
 
 // Tìm kiếm theo nhiệt độ, độ ẩm, ánh sáng & sắp xếp
 exports.searchAndSort = (req, res) => {
-    const { temperature, humidity, light, sortField = "time", order = "ASC", page = 1, pageSize = 5 } = req.query;
+    const { 
+        temperature, 
+        humidity, 
+        light, 
+        time,  // Thêm tham số time
+        sortField = "time", 
+        order = "ASC", 
+        page = 1, 
+        pageSize = 5 
+    } = req.query;
+    
     const offset = (page - 1) * pageSize;
     let baseQuery = "FROM sensor_data WHERE 1=1";
     const params = [];
 
+    if (time) {
+        baseQuery += " AND time LIKE ?";
+        params.push(`%${time}%`);
+    }
     if (temperature) {
         baseQuery += " AND temperature = ?";
         params.push(temperature);
