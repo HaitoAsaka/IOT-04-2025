@@ -361,3 +361,30 @@ canvas {
   font-weight: bold;
   color: #333;
 }
+
+
+.chart-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 5px;
+  padding: 20px 0;
+}
+
+.chart-container {
+  flex: 1 1 30%;
+  min-width: 300px;
+  max-width: 450px;
+  height: 400px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+

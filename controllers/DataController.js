@@ -122,6 +122,48 @@ exports.searchAndSort = (req, res) => {
     });
 };
 
+// controllers/DataController.js
+exports.getChartData = (req, res) => {
+  const query = `
+    SELECT time, temperature, humidity, light
+    FROM sensor_data
+    ORDER BY time DESC
+    LIMIT 5
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Lỗi truy vấn dữ liệu biểu đồ:", err);
+      return res.status(500).json({ error: "Lỗi server" });
+    }
+
+    const response = {
+      labels: results.map(row => row.time),
+      temperature: results.map(row => row.temperature),
+      humidity: results.map(row => row.humidity),
+      light: results.map(row => row.light),
+    };
+
+    res.json(response);
+  });
+};
+
+exports.getLatestSensorData = (req, res) => {
+  const query = "SELECT temperature, humidity, light FROM sensor_data WHERE id = 1";
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Lỗi truy vấn DB:", err);
+      return res.status(500).json({ error: "Lỗi server" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Không tìm thấy dữ liệu" });
+    }
+
+    res.json(results[0]);
+  });
+};
+
 // http://localhost:5000/api/sensors?page=1&pageSize=5
 // http://localhost:5000/api/searchByTime?startTime=2024-02-22T00:00:00.000Z&endTime=2024-02-23T23:59:59.999Z
 // http://localhost:5000/api/searchAndSort?temperature=30.5&sortField=temperature&order=DESC

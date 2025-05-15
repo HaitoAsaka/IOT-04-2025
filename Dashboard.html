@@ -97,14 +97,24 @@
 
   <div class="container">
     <section class="chart-section">
-        <div class="bi-u-gi-tr-th-c">
-            Biểu đồ giá trị thực
-            <br />
-        </div>
+            <div class="bi-u-gi-tr-th-c">Biểu đồ giá trị thực</div>
 
-        <div class="chart-container">
-            <canvas id="combinedChart"></canvas>
-        </div>
+        <div class="chart-group">
+            <div class="chart-container">
+            <canvas id="temperatureChart"></canvas>
+            <div class="chart-legend">Biểu đồ nhiệt độ (℃)</div>
+            </div>
+
+            <div class="chart-container">
+            <canvas id="humidityChart"></canvas>
+            <div class="chart-legend">Biểu đồ độ ẩm (%)</div>
+            </div>
+
+            <div class="chart-container">
+            <canvas id="lightChart"></canvas>
+            <div class="chart-legend">Biểu đồ ánh sáng (Lux)</div>
+            </div>
+  </div>
     </section>
 
     <section class="device-control">
@@ -114,7 +124,7 @@
               <div class="device-icon">
                   <img src="./img/dh.png" alt="Điều hòa">
               </div>
-              <h3 class="device-name">Điều hòa</h3>
+              <h3 class="device-name">Đèn 1</h3>
           </div>
           <div class="button-container">
               <button class="button button2" onclick="toggleButton(this)">Bật</button>
@@ -128,7 +138,7 @@
               <div class="device-icon">
                   <img src="./img/dn.png" alt="Đèn ngủ">
               </div>
-              <h3 class="device-name">Đèn ngủ</h3>
+              <h3 class="device-name">Đèn 2</h3>
           </div>
           <div class="button-container">
               <button class="button button2" onclick="toggleButton(this)">Bật</button>
@@ -142,7 +152,7 @@
               <div class="device-icon">
                   <img src="./img/qt.png" alt="Quạt trần">
               </div>
-              <h3 class="device-name">Quạt trần</h3>
+              <h3 class="device-name">Đèn 3</h3>
           </div>
           <div class="button-container">
               <button class="button button2" onclick="toggleButton(this)">Bật</button>
@@ -160,108 +170,130 @@
   </body>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    function toggleButton(button) {
-  let container = button.parentElement; // Lấy container của các nút trong cùng một thiết bị
-  let buttons = container.getElementsByTagName("button");
+<script>
+function toggleButton(button) {
+    let container = button.parentElement;
+    let buttons = container.getElementsByTagName("button");
 
-  // Xóa class 'active' và đặt lại màu cho tất cả các nút trong cùng nhóm
-  for (let btn of buttons) {
-    btn.classList.remove("active");
-    btn.style.backgroundColor = ""; // Đặt lại màu nền về mặc định (theo CSS)
-  }
+    for (let btn of buttons) {
+        btn.classList.remove("active");
+        btn.style.backgroundColor = "";
+    }
 
-  // Kích hoạt nút được bấm
-  button.classList.add("active");
+    button.classList.add("active");
 
-  // Thay đổi màu sắc dựa trên trạng thái nút
-  if (button.textContent.trim() === "Bật") {
-    button.style.backgroundColor = "#4CAF50"; // Xanh khi bật
-  } else {
-    button.style.backgroundColor = "#F44336"; // Đỏ khi tắt
-  }
+    if (button.textContent.trim() === "Bật") {
+        button.style.backgroundColor = "#4CAF50";
+    } else {
+        button.style.backgroundColor = "#F44336";
+    }
 }
-      document.addEventListener("DOMContentLoaded", function () {
-          // ========================== BIỂU ĐỒ CHART.JS ==========================
-          const ctx = document.getElementById('combinedChart').getContext('2d');
-  
-          const combinedChart = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                  labels: ['11h15', '11h20', '11h25', '11h30', '11h35'], // Thời gian
-                  datasets: [
-                      {
-                          label: 'Nhiệt độ (℃)',
-                          data: [30, 32, 31, 29, 30],
-                          backgroundColor: 'rgba(255, 0, 0, 0.6)', // Màu đỏ
-                          borderColor: 'red',
-                          borderWidth: 1,
-                          yAxisID: 'y-axis-1',
-                          type: 'bar',
-                      },
-                      {
-                          label: 'Độ ẩm (%)',
-                          data: [63, 65, 62, 64, 63],
-                          borderColor: 'blue',
-                          backgroundColor: 'rgba(0, 0, 255, 0.2)',
-                          borderWidth: 2,
-                          fill: false,
-                          yAxisID: 'y-axis-1',
-                          type: 'line',
-                      },
-                      {
-                          label: 'Ánh sáng (Lux)',
-                          data: [600, 620, 610, 590, 600],
-                          backgroundColor: 'rgba(255, 255, 0, 0.6)', // Màu vàng
-                          borderColor: 'yellow',
-                          borderWidth: 1,
-                          yAxisID: 'y-axis-1',
-                          type: 'bar',
-                      },
-                  ],
-              },
-              options: {
-                  responsive: true,
-                  scales: {
-                      yAxes: [
-                          {
-                              id: 'y-axis-1',
-                              type: 'linear',
-                              position: 'left',
-                              ticks: {
-                                  beginAtZero: true,
-                                  callback: function (value) {
-                                      return value + "%"; // Hiển thị đơn vị %
-                                  },
-                              },
-                          },
-                      ],
-                  },
-                  plugins: {
-                      tooltip: { enabled: true },
-                      legend: { display: true, position: 'top' },
-                  },
-              },
-              plugins: [
-                  {
-                      afterDatasetsDraw: function (chart) {
-                          const ctx = chart.ctx;
-                          chart.data.datasets.forEach((dataset, i) => {
-                              const meta = chart.getDatasetMeta(i);
-                              if (!meta.hidden) {
-                                  meta.data.forEach((element, index) => {
-                                      const data = dataset.data[index];
-                                      ctx.fillStyle = '#000'; // Màu chữ
-                                      ctx.font = 'bold 12px Arial';
-                                      ctx.textAlign = 'center';
-                                      ctx.fillText(data, element.x, element.y - 10); // Hiển thị số trên cột
-                                  });
-                              }
-                          });
-                      },
-                  },
-              ],
-          });
-      });
-  </script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    // ========================== BIỂU ĐỒ CHART.JS TÁCH RIÊNG ==========================
+
+    function createChart(canvasId, label, data, color, labels) {
+        const ctx = document.getElementById(canvasId).getContext("2d");
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: color,
+                    borderColor: color,
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        ticks: {
+                            display: false  // Ẩn nhãn trên trục x
+                        },
+                        grid: {
+                            drawTicks: false,   // Ẩn các dấu tick nhỏ trên trục x
+                            drawOnChartArea: false // Ẩn lưới trục x nếu muốn
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                    }
+                },
+                plugins: {
+                    tooltip: { enabled: true },
+                    legend: { display: false },
+                    //legend: { display: true, position: 'top' },
+                }
+            },
+            plugins: [{
+                afterDatasetsDraw: function (chart) {
+                    const ctx = chart.ctx;
+                    chart.data.datasets.forEach((dataset, i) => {
+                        const meta = chart.getDatasetMeta(i);
+                        if (!meta.hidden) {
+                            meta.data.forEach((element, index) => {
+                                const data = dataset.data[index];
+                                ctx.fillStyle = '#000';
+                                ctx.font = 'bold 12px Arial';
+                                ctx.textAlign = 'center';
+                                ctx.fillText(data, element.x, element.y - 5);
+                            });
+                        }
+                    });
+                }
+            }]
+        });
+    }
+
+    // Fetch dữ liệu từ API
+    fetch("http://localhost:5000/api/chart-data")
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.labels;
+            const tempData = data.temperature;
+            const humidData = data.humidity;
+            const lightData = data.light;
+
+            createChart('temperatureChart', 'Nhiệt độ (℃)', tempData, 'rgba(255, 0, 0, 0.6)', labels);
+            createChart('humidityChart', 'Độ ẩm (%)', humidData, 'rgba(0, 0, 255, 0.6)', labels);
+            createChart('lightChart', 'Ánh sáng (Lux)', lightData, 'rgba(255, 255, 0, 0.6)', labels);
+        })
+        .catch(error => console.error("Lỗi khi tải dữ liệu biểu đồ:", error));
+});
+</script>
+<script>
+  function updateSensorValues(data) {
+    // Cập nhật giá trị số
+    document.querySelectorAll(".sensor-number")[0].textContent = data.temperature;
+    document.querySelectorAll(".sensor-number")[1].textContent = data.humidity;
+    document.querySelectorAll(".sensor-number")[2].textContent = data.light;
+
+    // Cập nhật trạng thái (ví dụ đơn giản)
+    document.querySelectorAll(".sensor-status")[0].textContent =
+      data.temperature > 35 ? "Cao" : data.temperature >= 28 ? "Vừa" : "Thấp";
+
+    document.querySelectorAll(".sensor-status")[1].textContent =
+      data.humidity > 70 ? "Cao" : data.humidity >= 50 ? "Vừa" : "Thấp";
+
+    document.querySelectorAll(".sensor-status")[2].textContent =
+      data.light > 100 ? "Cao" : data.light >= 80 ? "Vừa" : "Thấp";
+  }
+
+  fetch("http://localhost:5000/api/latest-sensor")
+    .then(response => response.json())
+    .then(data => updateSensorValues(data))
+    .catch(error => console.error("Lỗi khi tải dữ liệu cảm biến:", error));
+
+  // Nếu muốn tự động cập nhật mỗi 2 giây, có thể dùng:
+  setInterval(() => {
+    fetch("http://localhost:5000/api/latest-sensor")
+      .then(response => response.json())
+      .then(data => updateSensorValues(data));
+  }, 2000);
+</script>
+
+
 </html>

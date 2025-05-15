@@ -22,6 +22,10 @@ app.get("/", (req, res) => {
   res.send("Server đang chạy! API hoạt động bình thường.");
 });
 
+app.get("/api/chart-data", dataController.getChartData);
+app.get("/api/latest-sensor", dataController.getLatestSensorData);
+
+
 // Chạy server
 const PORT = 5000;
 app.listen(PORT, () => {
