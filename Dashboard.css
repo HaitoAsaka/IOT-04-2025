@@ -296,13 +296,23 @@ canvas {
 }
 
 /* Nút chung */
+/* Nút chung */
 .button {
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.2s ease;
+  background: #eee; /* Màu nền mặc định sáng hơn để phân biệt */
+  color: #333;
+  box-shadow: none;
+}
+
+/* Hover cho tất cả các nút để dễ nhận biết */
+.button:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  background-color: #ccc;
 }
 
 /* Nút Bật */
@@ -311,9 +321,16 @@ canvas {
   color: black;
 }
 
+.button2:hover {
+  background-color: #45a049; /* Xanh đậm hơn khi hover */
+  color: white;
+  box-shadow: 0 0 10px #4caf50;
+}
+
 .button2.active {
   background: #4CAF50; /* Xanh khi bật */
   color: white;
+  box-shadow: 0 0 12px #4caf50;
 }
 
 /* Nút Tắt */
@@ -322,10 +339,18 @@ canvas {
   color: black;
 }
 
+.button4:hover {
+  background-color: #e53935; /* Đỏ đậm hơn khi hover */
+  color: white;
+  box-shadow: 0 0 10px #f44336;
+}
+
 .button4.active {
   background: #F44336; /* Đỏ khi tắt */
   color: white;
+  box-shadow: 0 0 12px #f44336;
 }
+
 
 
 
@@ -388,3 +413,14 @@ canvas {
   margin-top: 30px;
 }
 
+
+
+@keyframes blink {
+  0% { background-color: #ffe5e5; }
+  50% { background-color: #ff9999; }
+  100% { background-color: #ffe5e5; }
+}
+
+.blink {
+  animation: blink 1s infinite;
+}

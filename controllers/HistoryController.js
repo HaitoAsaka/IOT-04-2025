@@ -106,4 +106,25 @@ exports.searchHistoryByDateAndStatus = (req, res) => {
         });
     });
 };
+// Ghi lại trạng thái đèn (ON/OFF)
+exports.insertHistory = (req, res) => {
+    const { name, status } = req.body;
+
+    if (!name || !status) {
+        return res.status(400).json({ error: "Thiếu name hoặc status" });
+    }
+
+    const validStatuses = ["ON", "OFF"];
+    if (!validStatuses.includes(status.toUpperCase())) {
+        return res.status(400).json({ error: "Status phải là 'ON' hoặc 'OFF'" });
+    }
+
+    const query = "INSERT INTO sensor_db.history_db (name, status) VALUES (?, ?)"; // time sẽ tự động lấy CURRENT_TIMESTAMP
+    db.query(query, [name, status.toUpperCase()], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        res.status(201).json({ message: "Đã lưu lịch sử bật/tắt đèn", insertId: result.insertId });
+    });
+};
+
 

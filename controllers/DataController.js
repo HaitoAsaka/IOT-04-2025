@@ -149,7 +149,7 @@ exports.getChartData = (req, res) => {
 };
 
 exports.getLatestSensorData = (req, res) => {
-  const query = "SELECT temperature, humidity, light FROM sensor_data WHERE id = 1";
+  const query = "SELECT temperature, humidity, light FROM sensor_data ORDER BY id DESC LIMIT 1";
 
   db.query(query, (err, results) => {
     if (err) {
@@ -163,6 +163,7 @@ exports.getLatestSensorData = (req, res) => {
     res.json(results[0]);
   });
 };
+
 
 // http://localhost:5000/api/sensors?page=1&pageSize=5
 // http://localhost:5000/api/searchByTime?startTime=2024-02-22T00:00:00.000Z&endTime=2024-02-23T23:59:59.999Z

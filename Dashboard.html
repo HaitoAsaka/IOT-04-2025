@@ -40,60 +40,65 @@
   </div>
   <div class="content">
     <div class="sections">
-      <section class="sensor-box">
-        <div class="sensor-bg"></div>
-        <h2 class="sensor-title">Nhiệt độ</h2>
-      
-        <div class="sensor-value">
-          <p class="sensor-number">30</p>
-          <span class="sensor-unit">℃</span>
-        </div>
-      
-        <div class="sensor-icon">
-          <div class="sensor-circle"></div>
-          <img src="./img/heat.png" alt="Nhiệt độ">
-        </div>
-      
-        <p class="sensor-status status-high">Cao</p>
-        <img class="sensor-bg-img" src="./img/Frame 34.png">
-      </section>
-      
-      <section class="sensor-box">
-        <div class="sensor-bg"></div>
-        <h2 class="sensor-title">Độ ẩm</h2>
-      
-        <div class="sensor-value">
-          <p class="sensor-number">63</p>
-          <span class="sensor-unit">%</span>
-        </div>
-      
-        <div class="sensor-icon">
-          <div class="sensor-circle"></div>
-          <img src="./img/Humidity.png" alt="Độ ẩm">
-        </div>
-      
-        <p class="sensor-status status-medium">Vừa</p>
-        <img class="sensor-bg-img" src="./img/Group 30.png">
-      </section>
-      
-      <section class="sensor-box">
-        <div class="sensor-bg"></div>
-        <h2 class="sensor-title">Ánh sáng</h2>
-      
-        <div class="sensor-value">
-          <p class="sensor-number">600</p>
-          <span class="sensor-unit">Lux</span>
-        </div>
-      
-        <div class="sensor-icon">
-          <div class="sensor-circle"></div>
-          <img src="./img/Light.png" alt="Ánh sáng">
-        </div>
-      
-        <p class="sensor-status status-high">Cao</p>
-        <img class="sensor-bg-img" src="./img/Group 11.png">
-      </section>
+  <!-- Nhiệt độ -->
+    <section class="sensor-box" id="temperature-box">
+      <div class="sensor-bg"></div>
+      <h2 class="sensor-title">Nhiệt độ</h2>
+
+      <div class="sensor-value">
+        <p class="sensor-number" id="temp-value">30</p>
+        <span class="sensor-unit">℃</span>
+      </div>
+
+      <div class="sensor-icon">
+        <div class="sensor-circle"></div>
+        <img src="./img/heat.png" alt="Nhiệt độ">
+      </div>
+
+      <p class="sensor-status status-high" id="temp-status">Cao</p>
+      <img class="sensor-bg-img" src="./img/Frame 34.png">
+    </section>
+
+    <!-- Độ ẩm -->
+    <section class="sensor-box" id="humidity-box">
+      <div class="sensor-bg"></div>
+      <h2 class="sensor-title">Độ ẩm</h2>
+
+      <div class="sensor-value">
+        <p class="sensor-number" id="humid-value">63</p>
+        <span class="sensor-unit">%</span>
+      </div>
+
+      <div class="sensor-icon">
+        <div class="sensor-circle"></div>
+        <img src="./img/Humidity.png" alt="Độ ẩm">
+      </div>
+
+      <p class="sensor-status status-medium" id="humid-status">Vừa</p>
+      <img class="sensor-bg-img" src="./img/Group 30.png">
+    </section>
+
+    <!-- Ánh sáng -->
+    <section class="sensor-box" id="light-box">
+      <div class="sensor-bg"></div>
+      <h2 class="sensor-title">Ánh sáng</h2>
+
+      <div class="sensor-value">
+        <p class="sensor-number" id="light-value">600</p>
+        <span class="sensor-unit">Lux</span>
+      </div>
+
+      <div class="sensor-icon">
+        <div class="sensor-circle"></div>
+        <img src="./img/Light.png" alt="Ánh sáng">
+      </div>
+
+      <p class="sensor-status status-high" id="light-status">Cao</p>
+      <img class="sensor-bg-img" src="./img/Group 11.png">
+    </section>
   </div>
+
+
 
   <div class="container">
     <section class="chart-section">
@@ -118,48 +123,49 @@
     </section>
 
     <section class="device-control">
-      <!-- Điều hòa -->
-      <div class="device">
-          <div class="device-info">
-              <div class="device-icon">
-                  <img src="./img/dh.png" alt="Điều hòa">
-              </div>
-              <h3 class="device-name">Đèn 1</h3>
-          </div>
-          <div class="button-container">
-              <button class="button button2" onclick="toggleButton(this)">Bật</button>
-              <button class="button button4" onclick="toggleButton(this)">Tắt</button>
-          </div>
+    <!-- Đèn Đỏ -->
+    <div class="device">
+      <div class="device-info">
+        <div class="device-icon">
+          <img id="icon-den1" src="./img/lamp-on.png" alt="Đèn Đỏ">
+        </div>
+        <h3 class="device-name">Đèn Đỏ</h3>
       </div>
-  
-      <!-- Đèn ngủ -->
-      <div class="device">
-          <div class="device-info">
-              <div class="device-icon">
-                  <img src="./img/dn.png" alt="Đèn ngủ">
-              </div>
-              <h3 class="device-name">Đèn 2</h3>
-          </div>
-          <div class="button-container">
-              <button class="button button2" onclick="toggleButton(this)">Bật</button>
-              <button class="button button4" onclick="toggleButton(this)">Tắt</button>
-          </div>
+      <div class="button-container">
+        <button class="button button2" onclick="controlLed('den1', 1)">Bật</button>
+        <button class="button button4" onclick="controlLed('den1', 0)">Tắt</button>
       </div>
-  
-      <!-- Quạt trần -->
-      <div class="device">
-          <div class="device-info">
-              <div class="device-icon">
-                  <img src="./img/qt.png" alt="Quạt trần">
-              </div>
-              <h3 class="device-name">Đèn 3</h3>
-          </div>
-          <div class="button-container">
-              <button class="button button2" onclick="toggleButton(this)">Bật</button>
-              <button class="button button4" onclick="toggleButton(this)">Tắt</button>
-          </div>
+    </div>
+
+    <!-- Đèn Vàng -->
+    <div class="device">
+      <div class="device-info">
+        <div class="device-icon">
+          <img id="icon-den2" src="./img/lamp-on.png" alt="Đèn Vàng">
+        </div>
+        <h3 class="device-name">Đèn Vàng</h3>
       </div>
-  </section>
+      <div class="button-container">
+        <button class="button button2" onclick="controlLed('den2', 1)">Bật</button>
+        <button class="button button4" onclick="controlLed('den2', 0)">Tắt</button>
+      </div>
+    </div>
+
+    <!-- Đèn Xanh -->
+    <div class="device">
+      <div class="device-info">
+        <div class="device-icon">
+          <img id="icon-den3" src="./img/lamp-on.png" alt="Đèn Xanh">
+        </div>
+        <h3 class="device-name">Đèn Xanh</h3>
+      </div>
+      <div class="button-container">
+        <button class="button button2" onclick="controlLed('den3', 1)">Bật</button>
+        <button class="button button4" onclick="controlLed('den3', 0)">Tắt</button>
+      </div>
+    </div>
+
+    </section>
   
   
   
@@ -169,131 +175,302 @@
  
   </body>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-function toggleButton(button) {
+  let temperatureChart, humidityChart, lightChart;
+
+  function toggleButton(button) {
     let container = button.parentElement;
     let buttons = container.getElementsByTagName("button");
 
     for (let btn of buttons) {
-        btn.classList.remove("active");
-        btn.style.backgroundColor = "";
+      btn.classList.remove("active");
+      btn.style.backgroundColor = "";
     }
 
     button.classList.add("active");
 
     if (button.textContent.trim() === "Bật") {
-        button.style.backgroundColor = "#4CAF50";
+      button.style.backgroundColor = "#4CAF50";
     } else {
-        button.style.backgroundColor = "#F44336";
+      button.style.backgroundColor = "#F44336";
     }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    // ========================== BIỂU ĐỒ CHART.JS TÁCH RIÊNG ==========================
-
-    function createChart(canvasId, label, data, color, labels) {
-        const ctx = document.getElementById(canvasId).getContext("2d");
-        new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: label,
-                    data: data,
-                    backgroundColor: color,
-                    borderColor: color,
-                    borderWidth: 1,
-                }],
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        ticks: {
-                            display: false  // Ẩn nhãn trên trục x
-                        },
-                        grid: {
-                            drawTicks: false,   // Ẩn các dấu tick nhỏ trên trục x
-                            drawOnChartArea: false // Ẩn lưới trục x nếu muốn
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                    }
-                },
-                plugins: {
-                    tooltip: { enabled: true },
-                    legend: { display: false },
-                    //legend: { display: true, position: 'top' },
-                }
-            },
-            plugins: [{
-                afterDatasetsDraw: function (chart) {
-                    const ctx = chart.ctx;
-                    chart.data.datasets.forEach((dataset, i) => {
-                        const meta = chart.getDatasetMeta(i);
-                        if (!meta.hidden) {
-                            meta.data.forEach((element, index) => {
-                                const data = dataset.data[index];
-                                ctx.fillStyle = '#000';
-                                ctx.font = 'bold 12px Arial';
-                                ctx.textAlign = 'center';
-                                ctx.fillText(data, element.x, element.y - 5);
-                            });
-                        }
-                    });
-                }
-            }]
-        });
-    }
-
-    // Fetch dữ liệu từ API
-    fetch("http://localhost:5000/api/chart-data")
-        .then(response => response.json())
-        .then(data => {
-            const labels = data.labels;
-            const tempData = data.temperature;
-            const humidData = data.humidity;
-            const lightData = data.light;
-
-            createChart('temperatureChart', 'Nhiệt độ (℃)', tempData, 'rgba(255, 0, 0, 0.6)', labels);
-            createChart('humidityChart', 'Độ ẩm (%)', humidData, 'rgba(0, 0, 255, 0.6)', labels);
-            createChart('lightChart', 'Ánh sáng (Lux)', lightData, 'rgba(255, 255, 0, 0.6)', labels);
-        })
-        .catch(error => console.error("Lỗi khi tải dữ liệu biểu đồ:", error));
-});
-</script>
-<script>
-  function updateSensorValues(data) {
-    // Cập nhật giá trị số
-    document.querySelectorAll(".sensor-number")[0].textContent = data.temperature;
-    document.querySelectorAll(".sensor-number")[1].textContent = data.humidity;
-    document.querySelectorAll(".sensor-number")[2].textContent = data.light;
-
-    // Cập nhật trạng thái (ví dụ đơn giản)
-    document.querySelectorAll(".sensor-status")[0].textContent =
-      data.temperature > 35 ? "Cao" : data.temperature >= 28 ? "Vừa" : "Thấp";
-
-    document.querySelectorAll(".sensor-status")[1].textContent =
-      data.humidity > 70 ? "Cao" : data.humidity >= 50 ? "Vừa" : "Thấp";
-
-    document.querySelectorAll(".sensor-status")[2].textContent =
-      data.light > 100 ? "Cao" : data.light >= 80 ? "Vừa" : "Thấp";
   }
 
-  fetch("http://localhost:5000/api/latest-sensor")
-    .then(response => response.json())
-    .then(data => updateSensorValues(data))
-    .catch(error => console.error("Lỗi khi tải dữ liệu cảm biến:", error));
+  document.addEventListener("DOMContentLoaded", function () {
+    // Cấu hình biểu đồ
+    function createChartConfig(label, data, color, labels) {
+      return {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: data,
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 1,
+          }],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              ticks: { display: false },
+              grid: {
+                drawTicks: false,
+                drawOnChartArea: false,
+              },
+            },
+            y: {
+              beginAtZero: true,
+            },
+          },
+          plugins: {
+            tooltip: { enabled: true },
+            legend: { display: false },
+          }
+        },
+        plugins: [{
+          afterDatasetsDraw: function (chart) {
+            const ctx = chart.ctx;
+            chart.data.datasets.forEach((dataset, i) => {
+              const meta = chart.getDatasetMeta(i);
+              if (!meta.hidden) {
+                meta.data.forEach((element, index) => {
+                  const data = dataset.data[index];
+                  ctx.fillStyle = '#000';
+                  ctx.font = 'bold 12px Arial';
+                  ctx.textAlign = 'center';
+                  ctx.fillText(data, element.x, element.y - 5);
+                });
+              }
+            });
+          }
+        }]
+      };
+    }
 
-  // Nếu muốn tự động cập nhật mỗi 2 giây, có thể dùng:
-  setInterval(() => {
-    fetch("http://localhost:5000/api/latest-sensor")
+    // Tạo biểu đồ lần đầu
+    function createCharts(data) {
+      const labels = data.labels;
+      const tempData = data.temperature;
+      const humidData = data.humidity;
+      const lightData = data.light;
+
+      const ctx1 = document.getElementById("temperatureChart").getContext("2d");
+      const ctx2 = document.getElementById("humidityChart").getContext("2d");
+      const ctx3 = document.getElementById("lightChart").getContext("2d");
+
+      temperatureChart = new Chart(ctx1, createChartConfig("Nhiệt độ (℃)", tempData, 'rgba(255, 0, 0, 0.6)', labels));
+      humidityChart = new Chart(ctx2, createChartConfig("Độ ẩm (%)", humidData, 'rgba(0, 0, 255, 0.6)', labels));
+      lightChart = new Chart(ctx3, createChartConfig("Ánh sáng (Lux)", lightData, 'rgba(255, 255, 0, 0.6)', labels));
+    }
+
+    // Cập nhật biểu đồ sau mỗi lần fetch
+    function updateCharts(data) {
+      const labels = data.labels;
+
+      temperatureChart.data.labels = labels;
+      temperatureChart.data.datasets[0].data = data.temperature;
+      temperatureChart.update();
+
+      humidityChart.data.labels = labels;
+      humidityChart.data.datasets[0].data = data.humidity;
+      humidityChart.update();
+
+      lightChart.data.labels = labels;
+      lightChart.data.datasets[0].data = data.light;
+      lightChart.update();
+    }
+
+    // Gọi API lần đầu
+    fetch("http://localhost:5000/api/chart-data")
       .then(response => response.json())
-      .then(data => updateSensorValues(data));
-  }, 2000);
+      .then(data => {
+        createCharts(data);
+      })
+      .catch(error => console.error("Lỗi khi tải dữ liệu biểu đồ:", error));
+
+    // Cập nhật biểu đồ mỗi 2 giây
+    setInterval(() => {
+      fetch("http://localhost:5000/api/chart-data?" + new Date().getTime())
+        .then(response => response.json())
+        .then(data => {
+          updateCharts(data);
+        })
+        .catch(error => console.error("Lỗi khi cập nhật biểu đồ:", error));
+    }, 2000);
+
+    // === CẬP NHẬT GIÁ TRỊ CẢM BIẾN TRỰC TIẾP ===
+  function updateSensorValues(data) {
+    document.getElementById("temp-value").textContent = data.temperature;
+    document.getElementById("humid-value").textContent = data.humidity;
+    document.getElementById("light-value").textContent = data.light;
+
+    const tempStatus = data.temperature > 30 ? "Cao" : data.temperature >= 28 ? "Vừa" : "Thấp";
+    const humidStatus = data.humidity >= 80 ? "Cao" : data.humidity >= 30 ? "Vừa" : "Thấp";
+    const lightStatus = data.light >= 600 ? "Cao" : data.light >= 200 ? "Vừa" : "Thấp";
+
+    const tempStatusEl = document.getElementById("temp-status");
+    const humidStatusEl = document.getElementById("humid-status");
+    const lightStatusEl = document.getElementById("light-status");
+
+    tempStatusEl.textContent = tempStatus;
+    humidStatusEl.textContent = humidStatus;
+    lightStatusEl.textContent = lightStatus;
+
+    tempStatusEl.className = "sensor-status status-" + tempStatus.toLowerCase();
+    humidStatusEl.className = "sensor-status status-" + humidStatus.toLowerCase();
+    lightStatusEl.className = "sensor-status status-" + lightStatus.toLowerCase();
+
+    // Nhấp nháy cả container
+    toggleBlinkSection("temperature-box", "Cao", tempStatus);
+    toggleBlinkSection("humidity-box", "Cao", humidStatus);
+    toggleBlinkSection("light-box", "Cao", lightStatus);
+  }
+
+  function toggleBlink(statusId, highValue, valueId) {
+    const statusEl = document.getElementById(statusId);
+    const valueEl = document.getElementById(valueId);
+    
+    if (statusEl.textContent.trim().toLowerCase() === highValue.toLowerCase()) {
+      statusEl.classList.add('blink');
+      valueEl.classList.add('blink');
+    } else {
+      statusEl.classList.remove('blink');
+      valueEl.classList.remove('blink');
+    }
+  }
+
+  function toggleBlinkSection(sectionId, highValue, currentStatus) {
+    const sectionEl = document.getElementById(sectionId);
+
+    if (currentStatus.trim().toLowerCase() === highValue.toLowerCase()) {
+      sectionEl.classList.add('blink');
+    } else {
+      sectionEl.classList.remove('blink');
+    }
+  }
+
+
+
+
+    function fetchLatestSensor() {
+      fetch("http://localhost:5000/api/latest-sensor?" + new Date().getTime())
+        .then(response => response.json())
+        .then(data => updateSensorValues(data))
+        .catch(error => console.error("Lỗi khi tải dữ liệu cảm biến:", error));
+    }
+
+    // Gọi API cảm biến lần đầu và mỗi 2 giây
+    fetchLatestSensor();
+    setInterval(fetchLatestSensor, 2000);
+  });
 </script>
+<script>
+  // Hàm gọi API lấy trạng thái toàn bộ đèn và cập nhật UI
+  function fetchLedStatusAndUpdateUI() {
+    fetch('http://localhost:5000/api/led-status')
+      .then(res => res.json())
+      .then(data => {
+        updateButtonStates(data);
+        updateAlertBlinking(data);
+      })
+      .catch(err => {
+        console.error('Lỗi lấy trạng thái đèn:', err);
+      });
+  }
 
+  // Hàm điều khiển bật/tắt đèn
+  function controlLed(led, state) {
+    fetch("http://localhost:5000/api/led", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ led, state })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        fetchLedStatusAndUpdateUI(); // Gọi lại để đồng bộ trạng thái
+      } else {
+        alert("Gửi lệnh thất bại!");
+        console.error(data);
+      }
+    })
+    .catch(err => {
+      alert("Lỗi kết nối tới server.");
+      console.error(err);
+    });
+  }
 
+  // Cập nhật trạng thái nút bật/tắt đèn và ảnh đèn
+  function updateButtonStates(status) {
+    ['den1', 'den2', 'den3'].forEach(denId => {
+      const isOn = status[denId] === 1 || status[denId] === "Bật";
+
+      const btnOn = document.querySelector(`.device button.button2[onclick*="${denId}"]`);
+      const btnOff = document.querySelector(`.device button.button4[onclick*="${denId}"]`);
+
+      // Cập nhật ảnh đèn
+      setLampIcon(denId, isOn ? 1 : 0);
+
+      if (btnOn && btnOff) {
+        if (isOn) {
+          btnOn.classList.add('active');
+          btnOn.style.backgroundColor = '#4CAF50';
+          btnOff.classList.remove('active');
+          btnOff.style.backgroundColor = '';
+        } else {
+          btnOn.classList.remove('active');
+          btnOn.style.backgroundColor = '';
+          btnOff.classList.add('active');
+          btnOff.style.backgroundColor = '#F44336';
+        }
+      }
+    });
+  }
+
+  // Cập nhật hiệu ứng nhấp nháy nếu có cảnh báo
+  function updateAlertBlinking(status) {
+    const tempBox = document.getElementById("temperature-box");
+    const humidBox = document.getElementById("humidity-box");
+    const lightBox = document.getElementById("light-box");
+
+    if (tempBox) {
+      if (status.tempAlert) tempBox.classList.add("blink");
+      else tempBox.classList.remove("blink");
+    }
+
+    if (humidBox) {
+      if (status.humidAlert) humidBox.classList.add("blink");
+      else humidBox.classList.remove("blink");
+    }
+
+    if (lightBox) {
+      if (status.lightAlert) lightBox.classList.add("blink");
+      else lightBox.classList.remove("blink");
+    }
+  }
+
+  // Cập nhật ảnh icon đèn tương ứng
+  function setLampIcon(deviceId, status) {
+    console.log(`Gọi setLampIcon: deviceId = ${deviceId}, status = ${status}`);
+    const imgElement = document.getElementById(`icon-${deviceId}`);
+    if (imgElement) {
+      const newSrc = status === 1 ? './img/lamp-on.png' : './img/lamp-off.png';
+      console.log("Đổi ảnh thành:", newSrc);
+      imgElement.src = newSrc + '?v=' + Date.now(); // tránh cache ảnh cũ
+    } else {
+      console.warn("Không tìm thấy phần tử với id:", `icon-${deviceId}`);
+    }
+  }
+
+  // Load dữ liệu ban đầu
+  window.addEventListener('DOMContentLoaded', () => {
+    fetchLedStatusAndUpdateUI();
+  });
+</script>
 </html>
