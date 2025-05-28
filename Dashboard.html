@@ -369,108 +369,131 @@
   });
 </script>
 <script>
-  // Hàm gọi API lấy trạng thái toàn bộ đèn và cập nhật UI
-  function fetchLedStatusAndUpdateUI() {
-    fetch('http://localhost:5000/api/led-status')
-      .then(res => res.json())
-      .then(data => {
+  // Biến lưu trạng thái hiện tại
+  let currentStatus = {
+    den1: 'Tắt',
+    den2: 'Bật', 
+    den3: 'Tắt'
+  };
+
+  // Hàm gọi API lấy trạng thái đèn
+  async function fetchLedStatusAndUpdateUI() {
+    try {
+      const response = await fetch(`http://localhost:5000/api/led-status?t=${Date.now()}`);
+      const data = await response.json();
+      
+      console.log("Dữ liệu nhận được:", data);
+      
+      if (validateLedStatus(data)) {
+        currentStatus = data;
         updateButtonStates(data);
-        updateAlertBlinking(data);
-      })
-      .catch(err => {
-        console.error('Lỗi lấy trạng thái đèn:', err);
-      });
-  }
-
-  // Hàm điều khiển bật/tắt đèn
-  function controlLed(led, state) {
-    fetch("http://localhost:5000/api/led", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ led, state })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        fetchLedStatusAndUpdateUI(); // Gọi lại để đồng bộ trạng thái
-      } else {
-        alert("Gửi lệnh thất bại!");
-        console.error(data);
       }
-    })
-    .catch(err => {
-      alert("Lỗi kết nối tới server.");
-      console.error(err);
-    });
+    } catch (err) {
+      console.error('Lỗi khi lấy trạng thái đèn:', err);
+      setTimeout(fetchLedStatusAndUpdateUI, 2000);
+    }
   }
 
-  // Cập nhật trạng thái nút bật/tắt đèn và ảnh đèn
+  // Hàm điều khiển đèn
+  async function controlLed(led, state, event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    try {
+      // Disable nút trong khi xử lý
+      const buttons = document.querySelectorAll(`.device button[onclick*="${led}"]`);
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        btn.textContent = "Đang xử lý...";
+      });
+
+      // Gửi yêu cầu đến server
+      const response = await fetch("http://localhost:5000/api/led", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ led, state })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Cập nhật UI ngay lập tức trước khi chờ phản hồi mới
+        currentStatus[led] = state ? 'Bật' : 'Tắt';
+        updateButtonStates(currentStatus);
+        
+        // Lấy trạng thái mới nhất từ server sau 500ms
+        setTimeout(fetchLedStatusAndUpdateUI, 500);
+      } else {
+        alert("Thao tác thất bại!");
+      }
+    } catch (err) {
+      console.error('Lỗi:', err);
+      alert("Lỗi kết nối!");
+    } finally {
+      // Enable lại các nút sau 1s
+      setTimeout(() => {
+        const buttons = document.querySelectorAll(`.device button[onclick*="${led}"]`);
+        buttons.forEach(btn => {
+          btn.disabled = false;
+          btn.textContent = btn.classList.contains('button2') ? "Bật" : "Tắt";
+        });
+      }, 1000);
+    }
+  }
+
+  // Cập nhật giao diện
   function updateButtonStates(status) {
     ['den1', 'den2', 'den3'].forEach(denId => {
-      const isOn = status[denId] === 1 || status[denId] === "Bật";
+      const val = status[denId];
+      const isOn = val === 1 || val === '1' || 
+                  (typeof val === 'string' && val.toLowerCase() === 'bật');
 
       const btnOn = document.querySelector(`.device button.button2[onclick*="${denId}"]`);
       const btnOff = document.querySelector(`.device button.button4[onclick*="${denId}"]`);
-
-      // Cập nhật ảnh đèn
-      setLampIcon(denId, isOn ? 1 : 0);
-
+      
       if (btnOn && btnOff) {
+        // Reset trạng thái
+        btnOn.classList.remove('active');
+        btnOff.classList.remove('active');
+        btnOn.style.backgroundColor = '';
+        btnOff.style.backgroundColor = '';
+
+        // Cập nhật trạng thái mới
         if (isOn) {
           btnOn.classList.add('active');
           btnOn.style.backgroundColor = '#4CAF50';
-          btnOff.classList.remove('active');
-          btnOff.style.backgroundColor = '';
         } else {
-          btnOn.classList.remove('active');
-          btnOn.style.backgroundColor = '';
           btnOff.classList.add('active');
           btnOff.style.backgroundColor = '#F44336';
         }
+        
+        // Cập nhật icon
+        setLampIcon(denId, isOn);
       }
     });
   }
 
-  // Cập nhật hiệu ứng nhấp nháy nếu có cảnh báo
-  function updateAlertBlinking(status) {
-    const tempBox = document.getElementById("temperature-box");
-    const humidBox = document.getElementById("humidity-box");
-    const lightBox = document.getElementById("light-box");
-
-    if (tempBox) {
-      if (status.tempAlert) tempBox.classList.add("blink");
-      else tempBox.classList.remove("blink");
-    }
-
-    if (humidBox) {
-      if (status.humidAlert) humidBox.classList.add("blink");
-      else humidBox.classList.remove("blink");
-    }
-
-    if (lightBox) {
-      if (status.lightAlert) lightBox.classList.add("blink");
-      else lightBox.classList.remove("blink");
-    }
-  }
-
-  // Cập nhật ảnh icon đèn tương ứng
+  // Các hàm phụ trợ giữ nguyên
   function setLampIcon(deviceId, status) {
-    console.log(`Gọi setLampIcon: deviceId = ${deviceId}, status = ${status}`);
     const imgElement = document.getElementById(`icon-${deviceId}`);
     if (imgElement) {
-      const newSrc = status === 1 ? './img/lamp-on.png' : './img/lamp-off.png';
-      console.log("Đổi ảnh thành:", newSrc);
-      imgElement.src = newSrc + '?v=' + Date.now(); // tránh cache ảnh cũ
-    } else {
-      console.warn("Không tìm thấy phần tử với id:", `icon-${deviceId}`);
+      imgElement.src = status ? './img/lamp-on.png' : './img/lamp-off.png';
     }
   }
 
-  // Load dữ liệu ban đầu
+  function validateLedStatus(data) {
+    return data && ['den1', 'den2', 'den3'].every(key => data[key] !== undefined);
+  }
+
+  // Khởi tạo
   window.addEventListener('DOMContentLoaded', () => {
     fetchLedStatusAndUpdateUI();
+    // Kiểm tra trạng thái mỗi 5s
+    setInterval(fetchLedStatusAndUpdateUI, 5000);
   });
 </script>
+
+
 </html>

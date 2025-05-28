@@ -289,3 +289,29 @@ body {
   padding: 5px;
   font-size: 14px;
 }
+
+/* Nút bật */
+.button.button2.active {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+/* Nút tắt */
+.button.button4.active {
+  background-color: #F44336 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+/* Hiệu ứng hover */
+.button:hover {
+  opacity: 0.9;
+}
+
+/* Đảm bảo nút không bị ghi đè bởi style khác */
+.device .button-container button {
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
