@@ -70,6 +70,10 @@ app.post("/api/led", (req, res) => {
   });
 });
 
+// Endpoint để frontend truy xuất trạng thái đèn
+app.get('/api/led-status', (req, res) => {
+  res.json(getLedStatus());
+});
 // Trang chủ test API
 app.get("/", (req, res) => {
   res.send("Server đang chạy! API hoạt động bình thường.");

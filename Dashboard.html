@@ -371,16 +371,26 @@
 <script>
   // Hàm gọi API lấy trạng thái toàn bộ đèn và cập nhật UI
   function fetchLedStatusAndUpdateUI() {
-    fetch('http://localhost:5000/api/led-status')
-      .then(res => res.json())
-      .then(data => {
-        updateButtonStates(data);
-        updateAlertBlinking(data);
-      })
-      .catch(err => {
-        console.error('Lỗi lấy trạng thái đèn:', err);
-      });
-  }
+  fetch('http://localhost:5000/api/led-status')
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (data && typeof data === 'object') {
+        updateButtonStates(data);      // Cập nhật trạng thái nút đèn
+        updateAlertBlinking(data);     // Cập nhật cảnh báo nếu có
+      } else {
+        console.warn('⚠️ Dữ liệu trả về không hợp lệ:', data);
+      }
+    })
+    .catch(err => {
+      console.error('❌ Lỗi lấy trạng thái đèn:', err);
+    });
+}
+
 
   // Hàm điều khiển bật/tắt đèn
   function controlLed(led, state) {
